@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Test de Hábitos de Moda</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
@@ -72,25 +72,57 @@
         opciones: ["Sí, siempre que puedo", "A veces", "No sé cómo hacerlo", "Nunca me lo he planteado"],
         puntajes: [3, 2, 1, 0]
       },
+
+      // Nuevas preguntas añadidas
       {
-        texto: "¿Compras ropa en línea sin saber si la marca tiene prácticas sostenibles?",
-        opciones: ["Sí, no me fijo en eso", "A veces lo reviso", "Casi siempre investigo antes", "Nunca compro sin saberlo"],
-        puntajes: [0, 1, 2, 3]
-      },
-      {
-        texto: "¿Has asistido o te interesan los mercados o ferias de moda sostenible?",
-        opciones: ["Sí, he asistido varias veces", "He ido una vez", "Me interesa pero no he ido", "No me interesa"],
+        texto: "¿Con qué frecuencia te informas sobre la política ética de las marcas que compras?",
+        opciones: ["Siempre antes de comprar", "A veces", "Rara vez", "Nunca"],
         puntajes: [3, 2, 1, 0]
       },
       {
-        texto: "¿Cuántas veces usas normalmente una prenda antes de dejar de usarla?",
-        opciones: ["Solo unas pocas veces", "Varias veces", "Hasta que se daña", "Durante años o hasta que no sirve"],
-        puntajes: [0, 1, 2, 3]
+        texto: "¿Prefieres comprar ropa fabricada localmente o en tu país?",
+        opciones: ["Sí, siempre que puedo", "A veces", "No me importa", "No, prefiero marcas internacionales"],
+        puntajes: [3, 2, 1, 0]
       },
       {
-        texto: "¿Cómo eliges una prenda cuando vas de compras?",
-        opciones: ["Por su precio y moda", "Por comodidad y estilo", "Por su durabilidad y marca", "Por su impacto ambiental y ética"],
-        puntajes: [0, 1, 2, 3]
+        texto: "¿Sueles reutilizar o combinar prendas para crear nuevos looks?",
+        opciones: ["Sí, frecuentemente", "A veces", "Rara vez", "Nunca"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Cómo sueles reaccionar si una marca que te gusta tiene un escándalo ambiental o social?",
+        opciones: ["Dejo de comprarles", "Me afecta un poco", "No me importa mucho", "No lo sabía"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Has asistido o participado en eventos o campañas sobre moda sostenible?",
+        opciones: ["Sí, varias veces", "Alguna vez", "No, pero me gustaría", "No y no me interesa"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Te interesa la durabilidad y calidad de la ropa más que las tendencias?",
+        opciones: ["Sí, siempre", "A veces", "No mucho", "Prefiero las tendencias"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Utilizas apps o plataformas para comprar o vender ropa de segunda mano?",
+        opciones: ["Sí, frecuentemente", "A veces", "No, pero quiero probar", "No y no me interesa"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Compras ropa fabricada con materiales reciclados o ecológicos?",
+        opciones: ["Sí, siempre", "A veces", "Rara vez", "Nunca"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Lees opiniones o reviews sobre la sostenibilidad de la ropa antes de comprar?",
+        opciones: ["Sí, siempre", "A veces", "Rara vez", "Nunca"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Qué tan importante es para ti que una prenda tenga certificaciones ambientales (GOTS, Fair Trade, etc.)?",
+        opciones: ["Muy importante", "Algo importante", "Poco importante", "Nada importante"],
+        puntajes: [3, 2, 1, 0]
       }
     ];
 
@@ -115,11 +147,11 @@
       });
 
       let mensaje = "";
-      if (puntaje >= 35) {
+      if (puntaje >= 45) {
         mensaje = "🟢 Alta conciencia ecológica. ¡Felicidades! Tu relación con la moda es responsable y consciente.";
-      } else if (puntaje >= 26) {
+      } else if (puntaje >= 35) {
         mensaje = "🟡 Conciencia moderada. Vas por buen camino, pero aún puedes mejorar tus decisiones de consumo.";
-      } else if (puntaje >= 15) {
+      } else if (puntaje >= 20) {
         mensaje = "🟠 Conciencia baja. Estás comenzando a reflexionar, pero tu impacto aún es elevado.";
       } else {
         mensaje = "🔴 Conciencia nula. Es hora de replantearte tus hábitos y su impacto en el planeta.";
