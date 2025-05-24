@@ -3,376 +3,403 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Test de Hábitos de Moda Sostenible</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
-
+  <title>Test de Conciencia Ecológica en Moda</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
-      color: #333;
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 10px;
+      background: #f5f5f5;
     }
-
-    h1 {
-      font-size: 2.8rem;
-      color: #004aad;
-      margin-bottom: 40px;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    h1, h2 {
+      text-align: center;
     }
-
     form {
-      background: #fff;
-      border-radius: 15px;
-      padding: 30px 40px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-      max-width: 600px;
-      width: 100%;
-      box-sizing: border-box;
-      position: relative;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
     }
-
     .seccion {
       display: none;
-      animation: fadeInUp 0.6s ease forwards;
     }
-
     .seccion.active {
       display: block;
     }
-
     .pregunta {
-      margin-bottom: 25px;
+      margin-bottom: 15px;
     }
-
-    .pregunta p {
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 12px;
-    }
-
     label {
       display: block;
-      margin-bottom: 10px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: color 0.3s;
+      margin-bottom: 5px;
     }
-
-    label:hover {
-      color: #004aad;
-    }
-
     input[type="radio"] {
       margin-right: 8px;
-      cursor: pointer;
-      accent-color: #004aad;
-      transform: scale(1.2);
-      vertical-align: middle;
     }
-
     .botones {
-      display: flex;
-      justify-content: space-between;
+      text-align: center;
       margin-top: 20px;
     }
-
     button {
-      background-color: #004aad;
-      color: white;
+      background-color: #4CAF50;
       border: none;
-      padding: 12px 28px;
-      font-size: 1.1rem;
-      border-radius: 8px;
+      color: white;
+      padding: 10px 22px;
+      margin: 0 10px;
+      border-radius: 4px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-      min-width: 110px;
-      user-select: none;
+      font-size: 16px;
     }
-
     button:disabled {
-      background-color: #aac5ff;
+      background-color: #aaa;
       cursor: not-allowed;
     }
-
-    button:hover:not(:disabled) {
-      background-color: #00307a;
-    }
-
     .resultado {
-      margin-top: 40px;
-      font-size: 1.5rem;
-      font-weight: 700;
-      padding: 25px;
-      border-radius: 15px;
-      max-width: 600px;
-      width: 100%;
-      box-sizing: border-box;
+      padding: 20px;
+      border-radius: 8px;
       text-align: center;
-      color: white;
-      user-select: none;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      display: none;
+      font-size: 18px;
+      font-weight: bold;
     }
-
-    .resultado.alto {
-      background: #4caf50; /* verde */
-    }
-
-    .resultado.medio {
-      background: #ff9800; /* naranja */
-    }
-
     .resultado.bajo {
-      background: #f44336; /* rojo */
+      color: #b71c1c;
+      background: #ffcdd2;
     }
-
-    .resultado.nulo {
-      background: #9e9e9e; /* gris */
+    .resultado.medio {
+      color: #f57f17;
+      background: #fff9c4;
     }
-
-    /* Animación suave */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .resultado.alto {
+      color: #1b5e20;
+      background: #c8e6c9;
     }
   </style>
 </head>
 <body>
-  <h1>Test de Hábitos de Moda Sostenible</h1>
 
-  <form id="test-form">
-    <!-- Secciones con preguntas -->
-    <div class="seccion active" data-seccion="0"></div>
-    <div class="seccion" data-seccion="1"></div>
-    <div class="seccion" data-seccion="2"></div>
+  <h1>Test de Conciencia Ecológica en Moda</h1>
+  <form id="formTest" novalidate>
+    <!-- Secciones para preguntas -->
+    <div class="seccion"></div>
+    <div class="seccion"></div>
+    <div class="seccion"></div>
+    <div class="seccion"></div>
+    <div class="seccion"></div>
+    <!-- Sección Resultado -->
+    <div class="seccion"></div>
 
     <div class="botones">
-      <button type="button" id="btn-prev" disabled>Anterior</button>
-      <button type="button" id="btn-next">Siguiente</button>
+      <button type="button" id="btnPrev" disabled>Anterior</button>
+      <button type="button" id="btnNext">Siguiente</button>
     </div>
   </form>
 
-  <div id="resultado" class="resultado"></div>
-
   <script>
-    // Preguntas agrupadas en secciones (3 por sección, total 9 preguntas)
     const preguntas = [
+      // Sección 1: Hábitos de compra y uso (6 preguntas)
       [
-        {
-          texto: "¿Lees las etiquetas para saber dónde y cómo fue fabricada una prenda?",
-          opciones: ["Siempre", "A veces", "Rara vez", "Nunca"],
-          puntajes: [3, 2, 1, 0],
-        },
-        {
-          texto: "Cuando ves una oferta irresistible, ¿compras sin pensar si lo necesitas?",
-          opciones: [
-            "Sí, casi siempre",
-            "A veces",
-            "Rara vez",
-            "Nunca, siempre reflexiono",
-          ],
-          puntajes: [0, 1, 2, 3],
-        },
-        {
-          texto: "¿Has comprado alguna vez en tiendas de segunda mano o vintage?",
-          opciones: [
-            "Sí, frecuentemente",
-            "Sí, alguna vez",
-            "No, pero me interesa",
-            "No y no me interesa",
-          ],
-          puntajes: [3, 2, 1, 0],
-        },
+        { texto: "¿Con qué frecuencia compras ropa nueva?", opciones: [
+          { texto: "Más de una vez al mes", valor: 1 },
+          { texto: "Una vez cada 2-3 meses", valor: 2 },
+          { texto: "Una vez cada 6 meses o menos", valor: 3 }
+        ]},
+        { texto: "¿Sueles comprar ropa de segunda mano?", opciones: [
+          { texto: "Nunca", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Frecuentemente", valor: 3 }
+        ]},
+        { texto: "¿Conservas la ropa que ya tienes por mucho tiempo?", opciones: [
+          { texto: "No, la cambio rápido", valor: 1 },
+          { texto: "Sí, un tiempo razonable", valor: 2 },
+          { texto: "Sí, años o hasta que se desgasta", valor: 3 }
+        ]},
+        { texto: "¿Reparas o ajustas la ropa antes de desecharla?", opciones: [
+          { texto: "Nunca", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Siempre que puedo", valor: 3 }
+        ]},
+        { texto: "¿Evitas las modas pasajeras y compras ropa clásica?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, casi siempre", valor: 3 }
+        ]},
+        { texto: "¿Sueles prestar atención a la calidad de la ropa que compras?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]}
       ],
+      // Sección 2: Conocimiento y compromiso (6 preguntas)
       [
-        {
-          texto: "¿Qué haces con la ropa que ya no usas?",
-          opciones: [
-            "La dono o vendo",
-            "La guardo sin usar",
-            "La tiro",
-            "La transformo en algo nuevo",
-          ],
-          puntajes: [3, 1, 0, 2],
-        },
-        {
-          texto: "¿Has comprado alguna prenda solo porque estaba de moda, aunque no era tu estilo?",
-          opciones: ["Sí, varias veces", "A veces", "Rara vez", "Nunca"],
-          puntajes: [0, 1, 2, 3],
-        },
-        {
-          texto: "¿Con qué frecuencia compras ropa nueva?",
-          opciones: [
-            "Cada semana",
-            "Cada mes",
-            "Cada pocos meses",
-            "Solo cuando lo necesito",
-          ],
-          puntajes: [0, 1, 2, 3],
-        },
+        { texto: "¿Conoces el impacto ambiental de la industria de la moda?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Algo", valor: 2 },
+          { texto: "Sí, bastante", valor: 3 }
+        ]},
+        { texto: "¿Lees etiquetas para saber el origen y materiales de la ropa?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]},
+        { texto: "¿Prefieres ropa hecha con materiales orgánicos o reciclados?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre que puedo", valor: 3 }
+        ]},
+        { texto: "¿Participas o apoyas campañas de moda sostenible?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, activamente", valor: 3 }
+        ]},
+        { texto: "¿Intentas informarte sobre marcas responsables?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Poco", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]},
+        { texto: "¿Consideras el impacto ambiental al desechar ropa?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]}
       ],
+      // Sección 3: Reciclaje y reutilización (6 preguntas)
       [
-        {
-          texto: "¿Te interesa conocer el impacto ambiental de las marcas que consumes?",
-          opciones: [
-            "Sí, investigo mucho",
-            "Sí, un poco",
-            "No me interesa mucho",
-            "No, nunca me lo he planteado",
-          ],
-          puntajes: [3, 2, 1, 0],
-        },
-        {
-          texto: "¿Te atrae más una marca que comunica sus esfuerzos sostenibles?",
-          opciones: ["Sí, mucho", "Sí, un poco", "No me influye", "No lo noto"],
-          puntajes: [3, 2, 1, 0],
-        },
-        {
-          texto: "¿Lavas tu ropa con ciclos fríos y la secas al aire para reducir el impacto?",
-          opciones: ["Siempre", "A veces", "Rara vez", "Nunca"],
-          puntajes: [3, 2, 1, 0],
-        },
+        { texto: "¿Separas la ropa que ya no usas para donarla o reciclarla?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]},
+        { texto: "¿Transformas prendas viejas en otras nuevas o diferentes?", opciones: [
+          { texto: "Nunca", valor: 1 },
+          { texto: "Alguna vez", valor: 2 },
+          { texto: "Frecuentemente", valor: 3 }
+        ]},
+        { texto: "¿Evitas tirar ropa a la basura para reducir residuos?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]},
+        { texto: "¿Usas bolsas reutilizables al comprar ropa?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]},
+        { texto: "¿Prefieres comprar ropa que dure y puedas usar mucho tiempo?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, casi siempre", valor: 3 }
+        ]},
+        { texto: "¿Participas en programas de reciclaje textil en tu comunidad?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "No sé que existen", valor: 2 },
+          { texto: "Sí, regularmente", valor: 3 }
+        ]}
       ],
+      // Sección 4: Impacto social y económico (6 preguntas)
+      [
+        { texto: "¿Consideras las condiciones laborales de quienes fabrican la ropa?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]},
+        { texto: "¿Prefieres marcas locales o con comercio justo?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]},
+        { texto: "¿Evitas marcas que han sido denunciadas por explotación?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, siempre", valor: 3 }
+        ]},
+        { texto: "¿Crees que tu forma de comprar puede influir en la industria?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Un poco", valor: 2 },
+          { texto: "Sí, mucho", valor: 3 }
+        ]},
+        { texto: "¿Promueves el consumo responsable entre amigos y familia?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "A veces", valor: 2 },
+          { texto: "Sí, frecuentemente", valor: 3 }
+        ]},
+        { texto: "¿Participas en iniciativas comunitarias relacionadas con moda sostenible?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Alguna vez", valor: 2 },
+          { texto: "Sí, activamente", valor: 3 }
+        ]}
+      ],
+      // Sección 5: Conclusión y compromiso (6 preguntas)
+      [
+        { texto: "¿Estarías dispuesto/a a pagar más por ropa sostenible?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Depende", valor: 2 },
+          { texto: "Sí", valor: 3 }
+        ]},
+        { texto: "¿Estás dispuesto/a a reducir la cantidad de ropa que compras?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Un poco", valor: 2 },
+          { texto: "Sí, mucho", valor: 3 }
+        ]},
+        { texto: "¿Cambiarías tus hábitos para apoyar la moda ética y ecológica?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Tal vez", valor: 2 },
+          { texto: "Sí", valor: 3 }
+        ]},
+        { texto: "¿Crees que tus decisiones pueden ayudar a reducir el impacto ambiental?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Un poco", valor: 2 },
+          { texto: "Sí", valor: 3 }
+        ]},
+        { texto: "¿Estarías dispuesto/a a compartir lo aprendido con otros?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Tal vez", valor: 2 },
+          { texto: "Sí", valor: 3 }
+        ]},
+        { texto: "¿Quieres comprometerte a seguir mejorando tus hábitos?", opciones: [
+          { texto: "No", valor: 1 },
+          { texto: "Quizá", valor: 2 },
+          { texto: "Sí", valor: 3 }
+        ]}
+      ]
     ];
 
-    const containerSecciones = document.querySelectorAll(".seccion");
-    let respuestas = Array(preguntas.flat().length).fill(null);
-    let seccionActual = 0;
+    const form = document.getElementById('formTest');
+    const secciones = form.querySelectorAll('.seccion');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
 
-    // Función para renderizar preguntas en cada sección
-    function renderizarSeccion(indice) {
-      const seccion = containerSecciones[indice];
-      seccion.innerHTML = ""; // limpiar
+    let paginaActual = 0;
+    const totalPaginas = preguntas.length; // 5 secciones
 
-      preguntas[indice].forEach((pregunta, i) => {
-        const idxGlobal = indice * 3 + i;
-        const divPregunta = document.createElement("div");
-        divPregunta.className = "pregunta";
+    // Cargar preguntas en las secciones (excepto la última para resultado)
+    for(let i = 0; i < totalPaginas; i++) {
+      const seccion = secciones[i];
+      if(i < totalPaginas) {
+        seccion.classList.add('seccion');
+        if(i === 0) seccion.classList.add('active');
 
-        let opcionesHTML = pregunta.opciones
-          .map(
-            (op, j) =>
-              `<label>
-                <input type="radio" name="p${idxGlobal}" value="${pregunta.puntajes[j]}" ${
-                respuestas[idxGlobal] == pregunta.puntajes[j] ? "checked" : ""
-              } required>
-                ${op}
-              </label>`
-          )
-          .join("");
-
-        divPregunta.innerHTML = `<p><strong>${idxGlobal + 1}. ${pregunta.texto}</strong></p>${opcionesHTML}`;
-        seccion.appendChild(divPregunta);
-      });
-    }
-
-    // Renderizar todas las secciones una vez
-    for (let i = 0; i < containerSecciones.length; i++) {
-      renderizarSeccion(i);
-    }
-
-    // Navegación entre secciones
-    const btnPrev = document.getElementById("btn-prev");
-    const btnNext = document.getElementById("btn-next");
-    const form = document.getElementById("test-form");
-    const resultadoDiv = document.getElementById("resultado");
-
-    function actualizarBotones() {
-      btnPrev.disabled = seccionActual === 0;
-      btnNext.textContent =
-        seccionActual === containerSecciones.length - 1
-          ? "Ver resultado"
-          : "Siguiente";
-    }
-
-    function guardarRespuestas() {
-      // Guardar respuestas seleccionadas en el array global
-      preguntas[seccionActual].forEach((_, i) => {
-        const idxGlobal = seccionActual * 3 + i;
-        const sel = document.querySelector(`input[name=p${idxGlobal}]:checked`);
-        respuestas[idxGlobal] = sel ? Number(sel.value) : null;
-      });
-    }
-
-    btnPrev.addEventListener("click", () => {
-      guardarRespuestas();
-      if (seccionActual > 0) {
-        containerSecciones[seccionActual].classList.remove("active");
-        seccionActual--;
-        containerSecciones[seccionActual].classList.add("active");
-        actualizarBotones();
-        resultadoDiv.style.display = "none";
+        seccion.innerHTML = `<h2>Sección ${i + 1} de ${totalPaginas}</h2>`;
+        preguntas[i].forEach((p, idx) => {
+          const nombre = `p${i}_${idx}`;
+          const div = document.createElement('div');
+          div.className = 'pregunta';
+          let htmlPregunta = `<p>${p.texto}</p>`;
+          p.opciones.forEach((op, opIdx) => {
+            htmlPregunta += `
+              <label>
+                <input type="radio" name="${nombre}" value="${op.valor}" required>
+                ${op.texto}
+              </label>`;
+          });
+          div.innerHTML = htmlPregunta;
+          seccion.appendChild(div);
+        });
       }
-    });
+    }
 
-    btnNext.addEventListener("click", () => {
-      guardarRespuestas();
+    // La última sección es la de resultado y está vacía por ahora
+    secciones[totalPaginas].style.display = 'none';
 
-      // Validar que se respondan todas las preguntas de la sección
-      const respuestasValidas = preguntas[seccionActual].every((_, i) => {
-        const idxGlobal = seccionActual * 3 + i;
-        return respuestas[idxGlobal] !== null;
+    // Función para mostrar la sección actual
+    function mostrarSeccion(n) {
+      secciones.forEach((sec, i) => {
+        sec.classList.toggle('active', i === n);
       });
+      btnPrev.disabled = (n === 0);
+      if (n === totalPaginas) {
+        btnNext.style.display = 'none';
+        btnPrev.style.display = 'none';
+      } else {
+        btnNext.style.display = 'inline-block';
+        btnPrev.style.display = 'inline-block';
+      }
+    }
 
-      if (!respuestasValidas) {
-        alert("Por favor responde todas las preguntas antes de continuar.");
+    // Validar que todas las preguntas de la sección actual estén contestadas
+    function validarSeccion() {
+      const inputs = secciones[paginaActual].querySelectorAll('input[type="radio"]');
+      const preguntasCount = preguntas[paginaActual].length;
+      for(let i = 0; i < preguntasCount; i++) {
+        const name = `p${paginaActual}_${i}`;
+        if(!secciones[paginaActual].querySelector(`input[name="${name}"]:checked`)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // Calcular resultado total sumando valores de todas las respuestas
+    function calcularResultado() {
+      let suma = 0;
+      for(let i = 0; i < totalPaginas; i++) {
+        preguntas[i].forEach((p, idx) => {
+          const selected = form.querySelector(`input[name="p${i}_${idx}"]:checked`);
+          if(selected) {
+            suma += parseInt(selected.value, 10);
+          }
+        });
+      }
+      return suma;
+    }
+
+    // Mostrar resultado final con interpretación
+    function mostrarResultado() {
+      const totalPreguntas = preguntas.flat().length;
+      const maxPunt = totalPreguntas * 3; // máximo posible
+      const minPunt = totalPreguntas * 1; // mínimo posible
+      const punt = calcularResultado();
+
+      let texto = '';
+      let claseResultado = '';
+
+      const porcentaje = ((punt - minPunt) / (maxPunt - minPunt)) * 100;
+
+      if(porcentaje < 40) {
+        texto = `Tu nivel de conciencia ecológica en moda es Bajo (${punt} puntos).`;
+        claseResultado = 'bajo';
+      } else if(porcentaje < 70) {
+        texto = `Tu nivel de conciencia ecológica en moda es Medio (${punt} puntos).`;
+        claseResultado = 'medio';
+      } else {
+        texto = `¡Excelente! Tu nivel de conciencia ecológica en moda es Alto (${punt} puntos).`;
+        claseResultado = 'alto';
+      }
+
+      secciones[totalPaginas].innerHTML = `
+        <h2>Resultado del Test</h2>
+        <div class="resultado ${claseResultado}">${texto}</div>
+      `;
+      secciones[totalPaginas].style.display = 'block';
+      mostrarSeccion(totalPaginas);
+    }
+
+    // Manejar botón siguiente
+    btnNext.addEventListener('click', () => {
+      if (!validarSeccion()) {
+        alert('Por favor, responde todas las preguntas antes de continuar.');
         return;
       }
-
-      if (seccionActual < containerSecciones.length - 1) {
-        containerSecciones[seccionActual].classList.remove("active");
-        seccionActual++;
-        containerSecciones[seccionActual].classList.add("active");
-        actualizarBotones();
-        resultadoDiv.style.display = "none";
+      if(paginaActual < totalPaginas - 1) {
+        paginaActual++;
+        mostrarSeccion(paginaActual);
       } else {
-        // Calcular resultado
-        const suma = respuestas.reduce((acc, val) => acc + (val ?? 0), 0);
-
-        // Puntuación máxima posible: 3 puntos * 9 preguntas = 27
-        let nivel, colorClase;
-        if (suma >= 22) {
-          nivel = "Muy alto";
-          colorClase = "alto";
-        } else if (suma >= 16) {
-          nivel = "Alto";
-          colorClase = "alto";
-        } else if (suma >= 10) {
-          nivel = "Medio";
-          colorClase = "medio";
-        } else if (suma >= 5) {
-          nivel = "Bajo";
-          colorClase = "bajo";
-        } else {
-          nivel = "Muy bajo";
-          colorClase = "nulo";
-        }
-
-        resultadoDiv.textContent = `Tu nivel de conciencia ecológica en moda es: ${nivel} (Puntuación: ${suma} de 27)`;
-        resultadoDiv.className = `resultado ${colorClase}`;
-        resultadoDiv.style.display = "block";
-
-        // Deshabilitar botones
-        btnPrev.disabled = true;
-        btnNext.disabled = true;
+        // Última sección (resultado)
+        mostrarResultado();
       }
     });
 
-    actualizarBotones();
+    // Manejar botón anterior
+    btnPrev.addEventListener('click', () => {
+      if(paginaActual > 0) {
+        paginaActual--;
+        mostrarSeccion(paginaActual);
+      }
+    });
+
+    // Mostrar la primera sección al cargar
+    mostrarSeccion(0);
+
   </script>
 </body>
 </html>
