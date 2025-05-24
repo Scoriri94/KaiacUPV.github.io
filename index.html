@@ -3,162 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Test de Hábitos de Moda</title>
+  <title>Test de Hábitos de Moda Sostenible</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
-    .pregunta { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; }
-    h1, h2 { text-align: center; }
-    button { display: block; margin: 20px auto; padding: 10px 20px; font-size: 16px; }
-    .resultado { text-align: center; font-weight: bold; margin-top: 30px; font-size: 18px; }
-  </style>
-</head>
-<body>
-  <h1>Test de Hábitos de Moda</h1>
-  <form id="test-form">
-    <div id="preguntas-container"></div>
-    <button type="submit">Ver resultado</button>
-  </form>
-  <div class="resultado" id="resultado"></div>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  <script>
-    const preguntas = [
-      {
-        texto: "¿Lees las etiquetas para saber dónde y cómo fue fabricada una prenda?",
-        opciones: ["Siempre", "A veces", "Rara vez", "Nunca"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "Cuando ves una oferta irresistible, ¿compras sin pensar si lo necesitas?",
-        opciones: ["Sí, casi siempre", "A veces", "Rara vez", "Nunca, siempre reflexiono"],
-        puntajes: [0, 1, 2, 3]
-      },
-      {
-        texto: "¿Has comprado alguna vez en tiendas de segunda mano o vintage?",
-        opciones: ["Sí, frecuentemente", "Sí, alguna vez", "No, pero me interesa", "No y no me interesa"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Qué haces con la ropa que ya no usas?",
-        opciones: ["La dono o vendo", "La guardo sin usar", "La tiro", "La transformo en algo nuevo"],
-        puntajes: [3, 1, 0, 2]
-      },
-      {
-        texto: "¿Has comprado alguna prenda solo porque estaba de moda, aunque no era tu estilo?",
-        opciones: ["Sí, varias veces", "A veces", "Rara vez", "Nunca"],
-        puntajes: [0, 1, 2, 3]
-      },
-      {
-        texto: "¿Con qué frecuencia compras ropa nueva?",
-        opciones: ["Cada semana", "Cada mes", "Cada pocos meses", "Solo cuando lo necesito"],
-        puntajes: [0, 1, 2, 3]
-      },
-      {
-        texto: "¿Te interesa conocer el impacto ambiental de las marcas que consumes?",
-        opciones: ["Sí, investigo mucho", "Sí, un poco", "No me interesa mucho", "No, nunca me lo he planteado"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Te atrae más una marca que comunica sus esfuerzos sostenibles?",
-        opciones: ["Sí, mucho", "Sí, un poco", "No me influye", "No lo noto"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Lavas tu ropa con ciclos fríos y la secas al aire para reducir el impacto?",
-        opciones: ["Siempre", "A veces", "Rara vez", "Nunca"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Reparas tu ropa antes de desecharla?",
-        opciones: ["Sí, siempre que puedo", "A veces", "No sé cómo hacerlo", "Nunca me lo he planteado"],
-        puntajes: [3, 2, 1, 0]
-      },
+    h1 {
+      font-size: 2.8rem;
+      color: #004aad;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    }
 
-      // Nuevas preguntas añadidas
-      {
-        texto: "¿Con qué frecuencia te informas sobre la política ética de las marcas que compras?",
-        opciones: ["Siempre antes de comprar", "A veces", "Rara vez", "Nunca"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Prefieres comprar ropa fabricada localmente o en tu país?",
-        opciones: ["Sí, siempre que puedo", "A veces", "No me importa", "No, prefiero marcas internacionales"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Sueles reutilizar o combinar prendas para crear nuevos looks?",
-        opciones: ["Sí, frecuentemente", "A veces", "Rara vez", "Nunca"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Cómo sueles reaccionar si una marca que te gusta tiene un escándalo ambiental o social?",
-        opciones: ["Dejo de comprarles", "Me afecta un poco", "No me importa mucho", "No lo sabía"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Has asistido o participado en eventos o campañas sobre moda sostenible?",
-        opciones: ["Sí, varias veces", "Alguna vez", "No, pero me gustaría", "No y no me interesa"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Te interesa la durabilidad y calidad de la ropa más que las tendencias?",
-        opciones: ["Sí, siempre", "A veces", "No mucho", "Prefiero las tendencias"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Utilizas apps o plataformas para comprar o vender ropa de segunda mano?",
-        opciones: ["Sí, frecuentemente", "A veces", "No, pero quiero probar", "No y no me interesa"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Compras ropa fabricada con materiales reciclados o ecológicos?",
-        opciones: ["Sí, siempre", "A veces", "Rara vez", "Nunca"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Lees opiniones o reviews sobre la sostenibilidad de la ropa antes de comprar?",
-        opciones: ["Sí, siempre", "A veces", "Rara vez", "Nunca"],
-        puntajes: [3, 2, 1, 0]
-      },
-      {
-        texto: "¿Qué tan importante es para ti que una prenda tenga certificaciones ambientales (GOTS, Fair Trade, etc.)?",
-        opciones: ["Muy importante", "Algo importante", "Poco importante", "Nada importante"],
-        puntajes: [3, 2, 1, 0]
-      }
-    ];
+    form {
+      background: #fff;
+      border-radius: 15px;
+      padding: 30px 40px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+    }
 
-    const container = document.getElementById("preguntas-container");
-    preguntas.forEach((pregunta, index) => {
-      const div = document.createElement("div");
-      div.className = "pregunta";
-      div.innerHTML = `<p><strong>${index + 1}. ${pregunta.texto}</strong></p>`;
-      pregunta.opciones.forEach((opcion, i) => {
-        const input = `<label><input type="radio" name="p${index}" value="${pregunta.puntajes[i]}" required> ${opcion}</label><br>`;
-        div.innerHTML += input;
-      });
-      container.appendChild(div);
-    });
+    .seccion {
+      display: none;
+      animation: fadeInUp 0.6s ease forwards;
+    }
 
-    document.getElementById("test-form").addEventListener("submit", function(event) {
-      event.preventDefault();
-      let puntaje = 0;
-      preguntas.forEach((_, i) => {
-        const seleccionado = document.querySelector(`input[name=p${i}]:checked`);
-        if (seleccionado) puntaje += parseInt(seleccionado.value);
-      });
+    .seccion.active {
+      display: block;
+    }
 
-      let mensaje = "";
-      if (puntaje >= 45) {
-        mensaje = "🟢 Alta conciencia ecológica. ¡Felicidades! Tu relación con la moda es responsable y consciente.";
-      } else if (puntaje >= 35) {
-        mensaje = "🟡 Conciencia moderada. Vas por buen camino, pero aún puedes mejorar tus decisiones de consumo.";
-      } else if (puntaje >= 20) {
-        mensaje = "🟠 Conciencia baja. Estás comenzando a reflexionar, pero tu impacto aún es elevado.";
-      } else {
-        mensaje = "🔴 Conciencia nula. Es hora de replantearte tus hábitos y su impacto en el planeta.";
-      }
+    .pregunta {
+      margin-bottom: 25px;
+    }
 
-      document.getElementById("resultado").innerText = mensaje;
-    });
-  </script>
-</body>
-</html>
+    .pregunta p {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      mar
