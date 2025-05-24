@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test de Hábitos de Moda</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+    .pregunta { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; }
+    h1, h2 { text-align: center; }
+    button { display: block; margin: 20px auto; padding: 10px 20px; font-size: 16px; }
+    .resultado { text-align: center; font-weight: bold; margin-top: 30px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Test de Hábitos de Moda</h1>
+  <form id="test-form">
+    <div id="preguntas-container"></div>
+    <button type="submit">Ver resultado</button>
+  </form>
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    const preguntas = [
+      {
+        texto: "¿Lees las etiquetas para saber dónde y cómo fue fabricada una prenda?",
+        opciones: ["Siempre", "A veces", "Rara vez", "Nunca"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "Cuando ves una oferta irresistible, ¿compras sin pensar si lo necesitas?",
+        opciones: ["Sí, casi siempre", "A veces", "Rara vez", "Nunca, siempre reflexiono"],
+        puntajes: [0, 1, 2, 3]
+      },
+      {
+        texto: "¿Has comprado alguna vez en tiendas de segunda mano o vintage?",
+        opciones: ["Sí, frecuentemente", "Sí, alguna vez", "No, pero me interesa", "No y no me interesa"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Qué haces con la ropa que ya no usas?",
+        opciones: ["La dono o vendo", "La guardo sin usar", "La tiro", "La transformo en algo nuevo"],
+        puntajes: [3, 1, 0, 2]
+      },
+      {
+        texto: "¿Has comprado alguna prenda solo porque estaba de moda, aunque no era tu estilo?",
+        opciones: ["Sí, varias veces", "A veces", "Rara vez", "Nunca"],
+        puntajes: [0, 1, 2, 3]
+      },
+      {
+        texto: "¿Con qué frecuencia compras ropa nueva?",
+        opciones: ["Cada semana", "Cada mes", "Cada pocos meses", "Solo cuando lo necesito"],
+        puntajes: [0, 1, 2, 3]
+      },
+      {
+        texto: "¿Te interesa conocer el impacto ambiental de las marcas que consumes?",
+        opciones: ["Sí, investigo mucho", "Sí, un poco", "No me interesa mucho", "No, nunca me lo he planteado"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Te atrae más una marca que comunica sus esfuerzos sostenibles?",
+        opciones: ["Sí, mucho", "Sí, un poco", "No me influye", "No lo noto"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Lavas tu ropa con ciclos fríos y la secas al aire para reducir el impacto?",
+        opciones: ["Siempre", "A veces", "Rara vez", "Nunca"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Reparas tu ropa antes de desecharla?",
+        opciones: ["Sí, siempre que puedo", "A veces", "No sé cómo hacerlo", "Nunca me lo he planteado"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Compras ropa en línea sin saber si la marca tiene prácticas sostenibles?",
+        opciones: ["Sí, no me fijo en eso", "A veces lo reviso", "Casi siempre investigo antes", "Nunca compro sin saberlo"],
+        puntajes: [0, 1, 2, 3]
+      },
+      {
+        texto: "¿Has asistido o te interesan los mercados o ferias de moda sostenible?",
+        opciones: ["Sí, he asistido varias veces", "He ido una vez", "Me interesa pero no he ido", "No me interesa"],
+        puntajes: [3, 2, 1, 0]
+      },
+      {
+        texto: "¿Cuántas veces usas normalmente una prenda antes de dejar de usarla?",
+        opciones: ["Solo unas pocas veces", "Varias veces", "Hasta que se daña", "Durante años o hasta que no sirve"],
+        puntajes: [0, 1, 2, 3]
+      },
+      {
+        texto: "¿Cómo eliges una prenda cuando vas de compras?",
+        opciones: ["Por su precio y moda", "Por comodidad y estilo", "Por su durabilidad y marca", "Por su impacto ambiental y ética"],
+        puntajes: [0, 1, 2, 3]
+      }
+    ];
+
+    const container = document.getElementById("preguntas-container");
+    preguntas.forEach((pregunta, index) => {
+      const div = document.createElement("div");
+      div.className = "pregunta";
+      div.innerHTML = `<p><strong>${index + 1}. ${pregunta.texto}</strong></p>`;
+      pregunta.opciones.forEach((opcion, i) => {
+        const input = `<label><input type="radio" name="p${index}" value="${pregunta.puntajes[i]}" required> ${opcion}</label><br>`;
+        div.innerHTML += input;
+      });
+      container.appendChild(div);
+    });
+
+    document.getElementById("test-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      let puntaje = 0;
+      preguntas.forEach((_, i) => {
+        const seleccionado = document.querySelector(`input[name=p${i}]:checked`);
+        if (seleccionado) puntaje += parseInt(seleccionado.value);
+      });
+
+      let mensaje = "";
+      if (puntaje >= 35) {
+        mensaje = "🟢 Alta conciencia ecológica. ¡Felicidades! Tu relación con la moda es responsable y consciente.";
+      } else if (puntaje >= 26) {
+        mensaje = "🟡 Conciencia moderada. Vas por buen camino, pero aún puedes mejorar tus decisiones de consumo.";
+      } else if (puntaje >= 15) {
+        mensaje = "🟠 Conciencia baja. Estás comenzando a reflexionar, pero tu impacto aún es elevado.";
+      } else {
+        mensaje = "🔴 Conciencia nula. Es hora de replantearte tus hábitos y su impacto en el planeta.";
+      }
+
+      document.getElementById("resultado").innerText = mensaje;
+    });
+  </script>
+</body>
+</html>
