@@ -298,8 +298,60 @@
       }
     });
 
-    crearSecciones();
-   
-  </script>
-</body>
-</html>
+   function crearSecciones() {
+  const nombresImagenes = [
+    "page1reciclaje.JPG",
+    "page2ml.jpg",
+    "page3ml.jpg",
+    "page4ml.jpg",
+    "pageml5.jpg"
+  ];
+
+  for (let i = 0; i < totalSecciones; i++) {
+    const seccion = document.createElement("div");
+    seccion.className = "seccion";
+    seccion.dataset.index = i;
+    if (i === 0) seccion.classList.add("active");
+
+    const imagen = document.createElement("img");
+    imagen.src = `imagesMl/${nombresImagenes[i]}`;
+    imagen.alt = `Sección ${i + 1}`;
+    imagen.style.width = "100%";
+    imagen.style.borderRadius = "12px";
+    imagen.style.marginBottom = "20px";
+    seccion.appendChild(imagen);
+
+    const desde = i * preguntasPorSeccion;
+    const hasta = Math.min(desde + preguntasPorSeccion, totalPreguntas);
+
+    for (let j = desde; j < hasta; j++) {
+      const preguntaDiv = document.createElement("div");
+      preguntaDiv.className = "pregunta";
+
+      const p = document.createElement("p");
+      p.textContent = `${j + 1}. ${preguntas[j]}`;
+      preguntaDiv.appendChild(p);
+
+      opciones.forEach((op, idx) => {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = `pregunta${j}`;
+        input.value = puntajes[idx];
+        input.addEventListener("change", () => {
+          respuestas[j] = parseInt(input.value);
+          actualizarProgreso();
+        });
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(op));
+        preguntaDiv.appendChild(label);
+      });
+
+      seccion.appendChild(preguntaDiv);
+    }
+
+    seccionesContenedor.appendChild(seccion);
+  }
+}
+
+
