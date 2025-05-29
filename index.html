@@ -127,6 +127,12 @@
       color: #c62828;
     }
 
+    img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -171,10 +177,10 @@
       "¿Te interesa la moda circular?",
       "¿Has participado en intercambios de ropa?",
       // Sección 3
-      "¿Donas tu ropa usada?",
+      "¿Prefieres asegurarte tú mismo una segunda vida a tus prendas a depositarla en contenedores?",
       "¿Compras ropa para cada temporada aunque no la necesites?",
       "¿Prefieres marcas locales sobre internacionales?",
-      "¿Usas apps o herramientas para medir tu impacto ambiental?",
+      "¿Compras online en webs como SHEIN?",
       "¿Apoyas campañas sobre consumo consciente?",
       "¿Planificas tus compras de moda?",
       // Sección 4
@@ -190,7 +196,7 @@
       "¿Compras productos de comercio justo?",
       "¿Usas servicios de alquiler de ropa?",
       "¿Enseñas a otros sobre consumo responsable?",
-      "¿Evitas prendas con microplásticos?"
+      "¿Investigas dónde terminan y qué hacen con las prendas que reciclas?"
     ];
 
     const opciones = ["Siempre", "A menudo", "A veces", "Nunca"];
@@ -209,12 +215,26 @@
     const btnSiguiente = document.getElementById("siguiente");
     const barraProgreso = document.getElementById("barra-progreso");
 
+    const nombresImagenes = [
+      "page1reciclaje.JPG",
+      "page2ml.jpg",
+      "page3ml.jpg",
+      "page4ml.jpg",
+      "pageml5.jpg"
+    ];
+
     function crearSecciones() {
       for (let i = 0; i < totalSecciones; i++) {
         const seccion = document.createElement("div");
         seccion.className = "seccion";
         seccion.dataset.index = i;
         if (i === 0) seccion.classList.add("active");
+
+        // Imagen para la sección
+        const imagen = document.createElement("img");
+        imagen.src = imagesMl/${nombresImagenes[i]};
+        imagen.alt = Sección ${i + 1};
+        seccion.appendChild(imagen);
 
         const desde = i * preguntasPorSeccion;
         const hasta = Math.min(desde + preguntasPorSeccion, totalPreguntas);
@@ -224,15 +244,16 @@
           preguntaDiv.className = "pregunta";
 
           const p = document.createElement("p");
-          p.textContent = `${j + 1}. ${preguntas[j]}`;
+          p.textContent = ${j + 1}. ${preguntas[j]};
           preguntaDiv.appendChild(p);
 
           opciones.forEach((op, idx) => {
             const label = document.createElement("label");
             const input = document.createElement("input");
             input.type = "radio";
-            input.name = `pregunta${j}`;
+            input.name = pregunta${j};
             input.value = puntajes[idx];
+            input.checked = respuestas[j] === puntajes[idx];
             input.addEventListener("change", () => {
               respuestas[j] = parseInt(input.value);
               actualizarProgreso();
@@ -252,53 +273,4 @@
     function actualizarProgreso() {
       const respondidas = respuestas.filter(r => r !== null).length;
       const porcentaje = (respondidas / totalPreguntas) * 100;
-      barraProgreso.style.width = `${porcentaje}%`;
-    }
-
-    function cambiarSeccion(delta) {
-      const secciones = document.querySelectorAll(".seccion");
-      secciones[seccionActual].classList.remove("active");
-      seccionActual += delta;
-      secciones[seccionActual].classList.add("active");
-
-      btnAnterior.disabled = seccionActual === 0;
-      btnSiguiente.textContent = seccionActual === totalSecciones - 1 ? "Ver resultado" : "Siguiente";
-    }
-
-    btnAnterior.addEventListener("click", () => cambiarSeccion(-1));
-
-    btnSiguiente.addEventListener("click", () => {
-      if (seccionActual === totalSecciones - 1) {
-        if (respuestas.includes(null)) {
-          alert("Por favor responde todas las preguntas.");
-          return;
-        }
-
-        const total = respuestas.reduce((a, b) => a + b, 0);
-        const maximo = totalPreguntas * 3;
-        let texto = "", clase = "";
-
-        if (total >= maximo * 0.85) {
-          texto = "Nivel muy alto de conciencia ecológica 🌱";
-          clase = "alto";
-        } else if (total >= maximo * 0.6) {
-          texto = "Buen nivel de conciencia ecológica 👍";
-          clase = "medio";
-        } else {
-          texto = "Bajo nivel de conciencia ecológica ❗";
-          clase = "bajo";
-        }
-
-        resultado.textContent = `${texto} (Puntuación: ${total}/${maximo})`;
-        resultado.className = `resultado ${clase}`;
-        resultado.style.display = "block";
-        document.getElementById("formulario").style.display = "none";
-      } else {
-        cambiarSeccion(1);
-      }
-    });
-
-    crearSecciones();
-  </script>
-</body>
-</html>
+      barraProgreso.style
