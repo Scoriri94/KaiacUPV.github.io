@@ -171,10 +171,10 @@
       "¿Te interesa la moda circular?",
       "¿Has participado en intercambios de ropa?",
       // Sección 3
-      "¿Donas tu ropa usada?",
+      "¿Prefieres asegurarte tu mismo una segunda vida a tus prendas a depositarla en contenedores?",
       "¿Compras ropa para cada temporada aunque no la necesites?",
       "¿Prefieres marcas locales sobre internacionales?",
-      "¿Usas apps o herramientas para medir tu impacto ambiental?",
+      "¿Compras online en webs como SHEIN?",
       "¿Apoyas campañas sobre consumo consciente?",
       "¿Planificas tus compras de moda?",
       // Sección 4
@@ -190,7 +190,7 @@
       "¿Compras productos de comercio justo?",
       "¿Usas servicios de alquiler de ropa?",
       "¿Enseñas a otros sobre consumo responsable?",
-      "¿Evitas prendas con microplásticos?"
+      "¿Investigas dónde terminan y qué hacen con las prendas que reciclas?"
     ];
 
     const opciones = ["Siempre", "A menudo", "A veces", "Nunca"];
@@ -299,6 +299,17 @@
     });
 
     crearSecciones();
+   
+if (i === 0) {
+  const portada = document.createElement("img");
+  portada.src = "C:\Users\Sebastian\Pictures\page1reciclaje.JPG"; 
+  portada.alt = "Portada del Test";
+  portada.style.width = "100%";
+  portada.style.borderRadius = "10px";
+  portada.style.marginBottom = "20px";
+  seccion.appendChild(portada);
+}
+
   </script>
 </body>
 </html>
