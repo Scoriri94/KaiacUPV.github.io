@@ -273,4 +273,6 @@
     function actualizarProgreso() {
       const respondidas = respuestas.filter(r => r !== null).length;
       const porcentaje = (respondidas / totalPreguntas) * 100;
-      barraProgreso.style
+      barraProgreso.style.width = porcentaje + '%';
+  barraProgreso.textContent = Math.round(porcentaje) + '%';
+}
